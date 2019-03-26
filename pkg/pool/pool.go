@@ -63,10 +63,10 @@ func (p *Pool) dispatch(jobs chan job.Job) {
 			workerID = id
 		} else {
 			hostWorker[j.Hostname] = workerID
+			i++
 		}
 
 		p.inCh[workerID] <- j
-		i++
 		if i >= p.wNum {
 			i = 0
 		}
