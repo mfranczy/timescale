@@ -13,7 +13,11 @@ import (
 )
 
 func main() {
-	a := args.Parse()
+	a, err := args.Parse()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	pg, err := db.Connect()
 	if err != nil {
 		log.Fatal(err)
