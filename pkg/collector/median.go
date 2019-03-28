@@ -31,7 +31,7 @@ func balanceHeaps(maxHeap *container.MaxHeap, minHeap *container.MinHeap) {
 
 func getMedian(maxHeap *container.MaxHeap, minHeap *container.MinHeap) int64 {
 	if maxHeap.Len() == minHeap.Len() {
-		return heap.Pop(maxHeap).(int64) + heap.Pop(minHeap).(int64)/int64(2)
+		return (heap.Pop(maxHeap).(int64) + heap.Pop(minHeap).(int64)) / int64(2)
 	} else if maxHeap.Len() > minHeap.Len() {
 		return heap.Pop(maxHeap).(int64)
 	} else {
