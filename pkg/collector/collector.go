@@ -13,24 +13,20 @@ type Result struct {
 	maxT     int64
 	medT     int64
 	sumT     int64
-	qSuccess int64
+	avgT     int64
+	qSuccess int
 	processT time.Duration
 }
 
 // PrintData shows processed data
 func (r *Result) PrintData(jobsNum int) {
-	avgT := int64(0)
-	if r.qSuccess > 0 {
-		avgT = r.sumT / r.qSuccess
-	}
-
 	fmt.Println("Total number of queries: ", jobsNum)
 	fmt.Println("Number of succeeded queries: ", r.qSuccess)
-	fmt.Println("Number of failed queries: ", int64(jobsNum)-r.qSuccess)
+	fmt.Println("Number of failed queries: ", jobsNum-r.qSuccess)
 	fmt.Println("Total processing time: ", time.Duration(r.processT))
 	fmt.Println("Maximum query time: ", time.Duration(r.maxT))
 	fmt.Println("Minimum query time: ", time.Duration(r.minT))
-	fmt.Println("Average query time: ", time.Duration(avgT))
+	fmt.Println("Average query time: ", time.Duration(r.avgT))
 	fmt.Println("Median query time: ", time.Duration(r.medT))
 }
 
@@ -57,7 +53,11 @@ func Process(dataCh <-chan int64) (rCh chan Result) {
 			}
 			result.qSuccess++
 			result.sumT += val
-			result.medT = getMedian(maxHeap, minHeap, val)
+			calculateMedian(maxHeap, minHeap, val)
+		}
+		result.medT = getMedian(maxHeap, minHeap)
+		if result.qSuccess > 0 {
+			result.avgT = result.sumT / int64(result.qSuccess)
 		}
 		result.processT = time.Since(start)
 		rCh <- result
