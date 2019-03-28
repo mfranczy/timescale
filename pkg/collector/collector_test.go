@@ -5,7 +5,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("collector", func() {
+var _ = Describe("process data", func() {
 	buffer := 5
 
 	Context("when data channel is empty", func() {

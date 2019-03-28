@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var _ = Describe("args", func() {
+var _ = Describe("parse args", func() {
 
 	Context("with specified arguments", func() {
 
