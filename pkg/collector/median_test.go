@@ -1,24 +1,11 @@
 package collector
 
 import (
-	"container/heap"
-
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
 	"timescale/pkg/container"
 )
-
-func addHeapElements(inf interface{}, val []int64) {
-	for _, v := range val {
-		switch inf.(type) {
-		case *container.MaxHeap:
-			heap.Push(inf.(*container.MaxHeap), v)
-		case *container.MinHeap:
-			heap.Push(inf.(*container.MinHeap), v)
-		}
-	}
-}
 
 var _ = Describe("calculate median", func() {
 
@@ -56,7 +43,7 @@ var _ = Describe("calculate median", func() {
 		Context("with adding a new element to heap", func() {
 			It("should add first element to max heap", func() {
 				expectedMaxHeap := container.NewMaxHeap()
-				addHeapElements(expectedMaxHeap, []int64{1})
+				container.AddHeapElements(expectedMaxHeap, []int64{1})
 
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
@@ -69,14 +56,14 @@ var _ = Describe("calculate median", func() {
 			It("should add smaller element to min heap", func() {
 				expectedMaxHeap := container.NewMaxHeap()
 				expectedMinHeap := container.NewMinHeap()
-				addHeapElements(expectedMaxHeap, []int64{2, 3})
-				addHeapElements(expectedMinHeap, []int64{4})
+				container.AddHeapElements(expectedMaxHeap, []int64{2, 3})
+				container.AddHeapElements(expectedMinHeap, []int64{4})
 
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{3})
-				addHeapElements(minHeap, []int64{4})
+				container.AddHeapElements(maxHeap, []int64{3})
+				container.AddHeapElements(minHeap, []int64{4})
 
 				addElement(maxHeap, minHeap, int64(2))
 				Expect(maxHeap).To(Equal(expectedMaxHeap))
@@ -86,14 +73,14 @@ var _ = Describe("calculate median", func() {
 			It("should add bigger element to max heap", func() {
 				expectedMaxHeap := container.NewMaxHeap()
 				expectedMinHeap := container.NewMinHeap()
-				addHeapElements(expectedMaxHeap, []int64{3})
-				addHeapElements(expectedMinHeap, []int64{4, 5})
+				container.AddHeapElements(expectedMaxHeap, []int64{3})
+				container.AddHeapElements(expectedMinHeap, []int64{4, 5})
 
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{3})
-				addHeapElements(minHeap, []int64{4})
+				container.AddHeapElements(maxHeap, []int64{3})
+				container.AddHeapElements(minHeap, []int64{4})
 
 				addElement(maxHeap, minHeap, int64(5))
 				Expect(maxHeap).To(Equal(expectedMaxHeap))
@@ -106,15 +93,15 @@ var _ = Describe("calculate median", func() {
 			By("adding expected elements to max and min heaps")
 			expectedMaxHeap := container.NewMaxHeap()
 			expectedMinHeap := container.NewMinHeap()
-			addHeapElements(expectedMaxHeap, []int64{1, 2})
-			addHeapElements(expectedMinHeap, []int64{3, 4})
+			container.AddHeapElements(expectedMaxHeap, []int64{1, 2})
+			container.AddHeapElements(expectedMinHeap, []int64{3, 4})
 
 			It("should pop element from min heap when max reached margin", func() {
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{1})
-				addHeapElements(minHeap, []int64{2, 3, 4})
+				container.AddHeapElements(maxHeap, []int64{1})
+				container.AddHeapElements(minHeap, []int64{2, 3, 4})
 
 				balanceHeaps(maxHeap, minHeap)
 				Expect(maxHeap).To(Equal(expectedMaxHeap))
@@ -125,8 +112,8 @@ var _ = Describe("calculate median", func() {
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{1, 2, 3})
-				addHeapElements(minHeap, []int64{4})
+				container.AddHeapElements(maxHeap, []int64{1, 2, 3})
+				container.AddHeapElements(minHeap, []int64{4})
 
 				balanceHeaps(maxHeap, minHeap)
 				Expect(maxHeap).To(Equal(expectedMaxHeap))
@@ -140,8 +127,8 @@ var _ = Describe("calculate median", func() {
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{3, 3})
-				addHeapElements(minHeap, []int64{4})
+				container.AddHeapElements(maxHeap, []int64{3, 3})
+				container.AddHeapElements(minHeap, []int64{4})
 
 				median := getMedian(maxHeap, minHeap)
 				Expect(median).To(Equal(int64(3)))
@@ -151,8 +138,8 @@ var _ = Describe("calculate median", func() {
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{3})
-				addHeapElements(minHeap, []int64{4, 5})
+				container.AddHeapElements(maxHeap, []int64{3})
+				container.AddHeapElements(minHeap, []int64{4, 5})
 
 				median := getMedian(maxHeap, minHeap)
 				Expect(median).To(Equal(int64(4)))
@@ -162,8 +149,8 @@ var _ = Describe("calculate median", func() {
 				maxHeap := container.NewMaxHeap()
 				minHeap := container.NewMinHeap()
 
-				addHeapElements(maxHeap, []int64{3})
-				addHeapElements(minHeap, []int64{5})
+				container.AddHeapElements(maxHeap, []int64{3})
+				container.AddHeapElements(minHeap, []int64{5})
 
 				median := getMedian(maxHeap, minHeap)
 				Expect(median).To(Equal(int64(4)))

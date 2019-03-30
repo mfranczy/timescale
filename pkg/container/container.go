@@ -37,3 +37,15 @@ func NewMinHeap() *MinHeap {
 	heap.Init(h)
 	return h
 }
+
+// AddHeapElements adds elements to max or min heap
+func AddHeapElements(inf interface{}, val []int64) {
+	for _, v := range val {
+		switch inf.(type) {
+		case *MaxHeap:
+			heap.Push(inf.(*MaxHeap), v)
+		case *MinHeap:
+			heap.Push(inf.(*MinHeap), v)
+		}
+	}
+}
