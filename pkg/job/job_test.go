@@ -104,7 +104,7 @@ var _ = Describe("jobs", func() {
 
 	Context("with streaming jobs", func() {
 
-		It("should return 0 jobs when there is nothing to provide to data channel", func() {
+		It("should return 0 jobs when there is nothing to provide to data channel", func(done Done) {
 			filePath, err := createCSVFile(dir, "test.csv", [][]string{})
 			Expect(err).NotTo(HaveOccurred())
 			Expect(filePath).NotTo(Equal(""))
@@ -116,9 +116,11 @@ var _ = Describe("jobs", func() {
 			job := <-dataCh
 			Expect(job).To(Equal(Job{}))
 			Expect(jobs.Num).To(Equal(0))
+
+			close(done)
 		}, 5)
 
-		It("should stream data when csv file is not empty", func() {
+		It("should stream data when csv file is not empty", func(done Done) {
 			expectedJobs := []Job{
 				{"host_test1", "2017-01-02 18:21:03", "2017-01-02 19:21:03"},
 				{"host_test2", "2017-01-03 19:21:03", "2017-01-05 21:21:03"},
@@ -145,9 +147,11 @@ var _ = Describe("jobs", func() {
 			}
 			Expect(jobs.Num).To(Equal(len(expectedJobs)))
 			Expect(i).To(Equal(len(expectedJobs)))
+
+			close(done)
 		}, 5)
 
-		It("should not crash when csv file has corrupted data", func() {
+		It("should not crash when csv file has corrupted data", func(done Done) {
 			csvData := [][]string{
 				{"hostname", "start_time", "end_time"},
 				{"host_test1", "2017-10-02 18:21:03", "2017-01-02 19:21:03"},
@@ -170,6 +174,8 @@ var _ = Describe("jobs", func() {
 
 			Expect(jobs.Num).To(Equal(len(csvData) - 1))
 			Expect(i).To(Equal(1))
+
+			close(done)
 		}, 5)
 
 	})

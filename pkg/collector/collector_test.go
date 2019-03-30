@@ -9,7 +9,8 @@ var _ = Describe("process data", func() {
 	buffer := 5
 
 	Context("when data channel is empty", func() {
-		It("should return empty result", func() {
+
+		It("should return empty result", func(done Done) {
 			dataCh := make(chan int64, buffer)
 			resCh := Process(dataCh)
 			close(resCh)
@@ -21,11 +22,15 @@ var _ = Describe("process data", func() {
 			Expect(res.medT).To(Equal(int64(0)))
 			Expect(res.avgT).To(Equal(int64(0)))
 			Expect(res.qSuccess).To(Equal(0))
-		})
+
+			close(done)
+		}, 5)
+
 	})
 
 	Context("when data channel contains output from workers", func() {
-		It("should calculate avg, max, median, # of jobs, processed time", func() {
+
+		It("should calculate avg, max, median, # of jobs, processed time", func(done Done) {
 			dataCh := make(chan int64, buffer)
 			data := []int64{1, 2, 3, 4, 5}
 
@@ -43,6 +48,9 @@ var _ = Describe("process data", func() {
 			Expect(res.medT).To(Equal(int64(3)))
 			Expect(res.avgT).To(Equal(int64(3)))
 			Expect(res.qSuccess).To(Equal(buffer))
-		})
+
+			close(done)
+		}, 5)
+
 	})
 })

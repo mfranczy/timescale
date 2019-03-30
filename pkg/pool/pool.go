@@ -10,11 +10,12 @@ const buffer = 10
 
 // Pool structure represents workers and channels
 type Pool struct {
-	w       []Worker
-	wNum    int
-	wDoneCh chan bool
-	inCh    []chan job.Job
-	OutCh   chan int64
+	w          []Worker
+	wNum       int
+	wDoneCh    chan bool
+	inCh       []chan job.Job
+	OutCh      chan int64
+	hostWorker map[string]int
 }
 
 // New returns a new Pool
@@ -23,12 +24,13 @@ func New(wNum int) *Pool {
 	inCh := make([]chan job.Job, wNum)
 	outCh := make(chan int64, buffer*wNum)
 	wDoneCh := make(chan bool, wNum)
+	hostWorker := make(map[string]int)
 
 	for i := 0; i < wNum; i++ {
 		inCh[i] = make(chan job.Job, buffer)
 		w[i] = newWorker(i+1, inCh[i], outCh, wDoneCh)
 	}
-	return &Pool{w, wNum, wDoneCh, inCh, outCh}
+	return &Pool{w, wNum, wDoneCh, inCh, outCh, hostWorker}
 }
 
 // Run worker pool
@@ -54,15 +56,13 @@ func (p *Pool) workersWait() {
 }
 
 func (p *Pool) dispatch(jobs chan job.Job) {
-	hostWorker := make(map[string]int)
 	i := 0
-
 	for j := range jobs {
 		workerID := i
-		if id, ok := hostWorker[j.Hostname]; ok {
+		if id, ok := p.hostWorker[j.Hostname]; ok {
 			workerID = id
 		} else {
-			hostWorker[j.Hostname] = workerID
+			p.hostWorker[j.Hostname] = workerID
 			i++
 		}
 

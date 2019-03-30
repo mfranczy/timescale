@@ -27,8 +27,8 @@ func Connect() (*sql.DB, error) {
 	return db, nil
 }
 
-// CPUQuery represents a sql query to calculate max and min cpu usage
-func GetCpuQuery(db *sql.DB) (*sql.Stmt, error) {
+// GetCPUQuery represents a sql query to calculate max and min cpu usage
+func GetCPUQuery(db *sql.DB) (*sql.Stmt, error) {
 	stmt, err := db.Prepare(`
 		SELECT
 			max(usage) AS max_cpu_usage, min(usage) AS min_cpu_usage
