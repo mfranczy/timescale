@@ -38,6 +38,12 @@ Usage of timescale-cli:
   -workers-num - number of running workers between <1-100> (default 1)
 ```
 
+you can combine this solution with the dockerized environment, first run `make docker-build` which will create a timescaledb container with data and then execute:
+
+```
+timescale-cli --csv-file artifacts/query_params.csv --workers-num 10 --db-config artifacts/db.yaml
+```
+
 ## Architecture overview
 
 ![Architecture](arch.png)
