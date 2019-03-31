@@ -5,3 +5,5 @@ docker-build:
 	hack/dockerized.sh
 run:
 	hack/run.sh
+test:
+	go test ./...

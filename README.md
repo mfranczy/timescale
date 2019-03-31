@@ -44,6 +44,9 @@ you can combine this solution with the dockerized environment, first run `make d
 timescale-cli --csv-file artifacts/query_params.csv --workers-num 10 --db-config artifacts/db.yaml
 ```
 
+## Test project
+Run `make test`
+
 ## Architecture overview
 
 ![Architecture](arch.png)
