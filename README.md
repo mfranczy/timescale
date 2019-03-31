@@ -10,9 +10,9 @@ You can build this project as a dockerized environment by simply executing `make
 
 It will create two containers, a **timescaledb container** with sample data provided from *artifacts/cpu_usage.csv* file and **timescale-cli container** which mounts *artifacts* directory into *timescale-cli:/data*.
 
-> NOTE: *project-path/artifacts* contains all files provided for this assignment
+> *project-path/artifacts* contains all provided files for this assignment
 
-To run **timescale-cli** you can execute `make run` with provided ENV vars:
+To run **timescale-cli** inside container you can execute `make run` with provided ENVs:
 
 * CSV_FILE - path to CSV file
 * WORKERS_NUM - number of running workers between <1-100> (default 1)
@@ -27,7 +27,7 @@ CSV_FILE=/data/query_params.csv WORKERS_NUM=10 make run
 
 Run `make build` to build **timescale-cli** binary locally on your host.
 
-> NOTE: It requires $GOBIN env to be set and make sure that it has been added to $PATH
+> It requires $GOBIN env to be set and make sure that it has been added to $PATH
 
 Now you should be able to execeute `timescale-cli --help`
 
@@ -38,7 +38,7 @@ Usage of timescale-cli:
   -workers-num - number of running workers between <1-100> (default 1)
 ```
 
-you can combine this solution with the dockerized environment, first run `make docker-build` which will create a timescaledb container with data and then execute:
+you can combine this solution with the dockerized environment, first run `make docker-build` which will create a timescaledb container with sample data and then execute:
 
 ```
 timescale-cli --csv-file artifacts/query_params.csv --workers-num 10 --db-config artifacts/db.yaml
