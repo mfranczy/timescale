@@ -3,7 +3,7 @@ package pool
 import (
 	"database/sql"
 
-	"timescale/pkg/job"
+	"github.com/mfranczy/timescale/pkg/job"
 )
 
 const buffer = 10

@@ -7,8 +7,8 @@ import (
 	. "github.com/onsi/gomega"
 	"gopkg.in/DATA-DOG/go-sqlmock.v1"
 
-	"timescale/pkg/db"
-	"timescale/pkg/job"
+	"github.com/mfranczy/timescale/pkg/db"
+	"github.com/mfranczy/timescale/pkg/job"
 )
 
 var _ = Describe("worker", func() {

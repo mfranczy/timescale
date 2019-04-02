@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"timescale/pkg/job"
+	"github.com/mfranczy/timescale/pkg/job"
 )
 
 // Worker represents a job execution unit

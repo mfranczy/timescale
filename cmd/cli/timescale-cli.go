@@ -3,13 +3,11 @@ package main
 import (
 	"log"
 
-	// "github.com/pkg/profile"
-
-	"timescale/pkg/args"
-	"timescale/pkg/collector"
-	"timescale/pkg/db"
-	"timescale/pkg/job"
-	"timescale/pkg/pool"
+	"github.com/mfranczy/timescale/pkg/args"
+	"github.com/mfranczy/timescale/pkg/collector"
+	"github.com/mfranczy/timescale/pkg/db"
+	"github.com/mfranczy/timescale/pkg/job"
+	"github.com/mfranczy/timescale/pkg/pool"
 )
 
 func main() {

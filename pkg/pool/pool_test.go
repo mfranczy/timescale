@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"timescale/pkg/job"
+	"github.com/mfranczy/timescale/pkg/job"
 )
 
 var _ = Describe("pool", func() {

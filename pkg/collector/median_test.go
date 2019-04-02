@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"timescale/pkg/container"
+	"github.com/mfranczy/timescale/pkg/container"
 )
 
 var _ = Describe("calculate median", func() {

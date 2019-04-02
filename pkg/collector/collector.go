@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"timescale/pkg/container"
+	"github.com/mfranczy/timescale/pkg/container"
 )
 
 // Result represents processed data from worker pool

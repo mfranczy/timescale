@@ -3,7 +3,7 @@ package collector
 import (
 	"container/heap"
 
-	"timescale/pkg/container"
+	"github.com/mfranczy/timescale/pkg/container"
 )
 
 func calculateMedian(maxHeap *container.MaxHeap, minHeap *container.MinHeap, val int64) {
